@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Comment } = require('../../models');
+const { User, Blog, Comment } = require('../../models');
 
 
 router.get('/', (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     
 router.post('/', async (req, res) => {
   if(!req.session.logged_in){
-    return res.status(401).json({msg:"hey! login first!"})
+    return res.status(401).json({msg:"You must login to do that :)"})
     }  
   try {
     const newComment = await Comment.create({
