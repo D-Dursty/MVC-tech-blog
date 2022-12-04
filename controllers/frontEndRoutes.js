@@ -1,61 +1,63 @@
 const express = require('express');
 const router = express.Router();
-const { User, Post, Comment } = require('../models');
+const { User, Blog, Comment } = require('../models');
 const { route } = require('./api');
 const sequelize = require('sequelize');
 
 router.get("/", (req, res) => {
-    Post.findAll().then(posts => {
-        const postsHbsData = posts.map(post => post.get({ plain: true }))
-        console.log(posts);
-        res.render("home", {
-            posts: postsHbsData,
-            logged_in: req.session.logged_in
-        })
-    })
-
-})
-
-router.get('/post/:id', (req, res) => {
-    Post.findByPk(req.params.id, {
-        include: [User,
-            {
-                model: Comment,
-                include: User,
-            },
-        ],
-    }).then(post => {
-        const postHbsData = post.get({ plain: true });
-        console.log(post);
-        console.log(postHbsData)
-        postHbsData.logged_in = req.session.logged_in
-        res.render("singlepost", postHbsData)
-    })
-})
-
-router.get("/sessions", (req, res) => {
+    Blog.findAll({
+      include:[User, Comment]
+    }).then((blogs) => {
+      // res.json(blogs)
+      const blogsHbsData = blogs.map((blog) => blog.get({ plain: true }));
+      res.render("home", {
+        blogs: blogsHbsData,
+      });
+    });
+  });
+  
+  router.get("/sessions", (req,res)=>{
     res.json(req.session)
-});
-
-router.get("/login", (req, res) => {
-    if (req.session.logged_in) {
-        return res.redirect("/dashboard")
+  })
+  
+  router.get("/blog/:id", (req, res) => {
+    Blog.findByPk(req.params.id, {
+      include: [User]
+    }).then((blog) => {
+      // res.json(blogs)
+      const blogHbsData = blog.get({ plain: true });
+      console.log(blog)
+      console.log(blogHbsData)
+      res.render("singleBlog", blogHbsData);
+    });
+  });
+  
+  router.get("/login", (req, res) => {
+    if(req.session.logged_in) {
+      return res.redirect("/profile")
     }
-    res.render("login")
-});
-
-router.get("/dashboard", (req, res) => {
-    if (!req.session.logged_in) {
+      res.render("login")
+  })
+  
+  router.get("/logout", (req, res) => {
+    if(req.session.logged_in) {
+      return res.redirect("/login")
+    }
+      res.render("login")
+  })
+  
+  
+  router.get("/profile", (req, res) => {
+      if(!req.session.logged_in) {
         return res.redirect("/login")
-    }
-    User.findByPk(req.session.user_id, {
-        include: [Post]
-    }).then(userData => {
-        const hbsData = userData.toJSON();
+      }
+      User.findByPk(req.session.user_id, {
+        include:[Blog, Comment]
+      }).then(userData=>{
+        const hbsData = userData.get({plain:true});
         console.log(hbsData)
-        hbsData.logged_in = req.session.logged_in
-        res.render("dashboard", hbsData)
-    })
-})
-
-module.exports = router;
+        res.render("profile", hbsData)
+      })
+  })
+  
+  module.exports = router;

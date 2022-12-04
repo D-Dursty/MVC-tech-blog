@@ -1,0 +1,9 @@
+{{!-- <h1>Hey, {{User}}, here are your posts!</h1> --}}
+
+<h2>All Blogs</h2>
+{{#each blog}}
+ {{> home-partial}}
+{{/each}}
+
+<script src="/js/profile.js"></script>
+<script src="/js/commentInput.js"></script>
