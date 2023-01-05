@@ -1,11 +1,8 @@
  <div class = "card">
-        <h3>{{User.name}}</h3>
+        <h3>{{User.username}}</h3>
         <h6>{{createdAt}}</h6>
-        <a href="/blog/{{id}}"><h3>{{title}}</h3></a>
+        <a href="api/blogs/{{id}}"><h3>{{title}}</h3></a>
 
-        <h3>POST:</h3>
-        <p>{{blog_content}}</p>
-        <h5>Comments:</h5>
-        <p>{{Comment.comment_content}}</p>
+        <p>{{body}}</p>
         <hr>
     </div>

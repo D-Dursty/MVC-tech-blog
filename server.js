@@ -21,18 +21,20 @@ app.use(express.static('public'));
 
 app.use(routes);
 
-// Set Express to use sessions
-app.use(session({
+
+const sess = {
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie:{
-      maxAge:2*60*60*1000 // calculates session time (2hrs*60min*60sec*60ms)
+  cookie: {
+    maxAge:1000*60*60*2
   },
+  resave: false,
+  saveUninitialized: true,
   store: new SequelizeStore({
-      db:sequelize
+    db: sequelize
   })
-}))
+};
+
+app.use(session(sess));
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));

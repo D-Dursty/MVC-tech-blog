@@ -1,10 +1,22 @@
-const { Model, DataTypes, NOW} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const moment = require('moment');
 
 class Blog extends Model {}
 
 Blog.init({
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false, 
+        primaryKey: true, 
+        autoIncrement: true, 
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'user',
+            key: 'id'
+        }
+    },
     title: {
          type: DataTypes.STRING,
          allowNull:false
@@ -15,18 +27,16 @@ Blog.init({
     },                
     created: {
         type: DataTypes.DATE,                 
-      get() {
-            return moment(this.getDataValue('created')).format('DD/MM/YYYY h:mm:ss');
-        }
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
     },
-    updated: {
-        type: DataTypes.DATE,
-        get() {
-            return moment(this.getDataValue('updated')).format('DD/MM/YYYY h:mm:ss');
-        }
-    }
+    
 },{
-    sequelize
+    sequelize,
+    timestamps: false,
+    freezeTableName: true, 
+    underscored: true, 
+    modelName: 'blog'
 });
 
 module.exports=Blog

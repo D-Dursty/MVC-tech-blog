@@ -1,9 +1,9 @@
 const loginForm = document.querySelector(".login");
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log("PREVENTED DEFAULT!");
+ 
   const userObj = {
-    email: document.querySelector("#loginEmail").value,
+    username: document.querySelector("#loginUsername").value,
     password: document.querySelector("#loginPassword").value,
   };
   fetch("/api/users/login", {
@@ -16,7 +16,7 @@ loginForm.addEventListener("submit", (e) => {
     if (res.ok) {
       location.reload();
     } else {
-      alert("trumpet sound");
+      alert("login unsuccessful :(");
     }
   });
 });
@@ -26,9 +26,9 @@ signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("PREVENTED DEFAULT!");
   const userObj = {
-    email: document.querySelector(".signupEmail").value,
-    name: document.querySelector(".signupName").value,
-    password: document.querySelector(".signupPassword").value,
+  
+    username: document.querySelector("#signupUsername").value,
+    password: document.querySelector("#signupPassword").value,
   };
   // console.log(userObj)
   fetch("/api/users/", {

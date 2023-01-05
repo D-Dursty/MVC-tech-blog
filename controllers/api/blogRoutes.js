@@ -1,16 +1,37 @@
 const router = require('express').Router();
 const { User, Blog, Comment } = require('../../models');
 
-router.get('/:id', (req, res)=>{
-  Blog.findByPk(req.params.id, {
-    include:Comment
+router.get('/', (req, res) => {
+  Blog.findAll({})
+  .then(blogData => res.json(blogData))
+  .catch(err => {
+    res.status(500).json(err)
   })
-  .then((blog)=>{
-      res.json(blog)
-  }).catch ((err) => {
-      console.log(err);
-      res.status(500).json({err:err})
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const blogData = await Blog.findByPk(req.params.id, {
+      indclude: [
+        {
+          model: User,
+          attributes: ['username']
+        }, {
+          model: Comment,
+          include: [
+            User
+          ]
+        }
+      ],
+    });
+    const blog = blogData.get({ plain: true});
+    res.render('blog', {
+      ...blog,
+      loggedIn: req.session.loggedIn
     })
+  } catch (err) {
+    res.status(500).json(err);
+  }
 })
 
 router.post('/', async (req, res) => {
@@ -42,7 +63,7 @@ router.post('/', async (req, res) => {
       });
   
       if (!blogData) {
-        res.status(404).json({ message: 'No blog found with this id!' });
+        res.status(404).json({ message: 'Blog post not found!' });
         return;
       }
   

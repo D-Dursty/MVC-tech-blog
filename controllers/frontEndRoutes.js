@@ -4,7 +4,8 @@ const { User, Blog, Comment } = require('../models');
 const { route } = require('./api');
 const sequelize = require('sequelize');
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+
     Blog.findAll({
       include:[User, Comment]
     }).then((blogs) => {
@@ -16,9 +17,7 @@ router.get("/", (req, res) => {
     });
   });
   
-  router.get("/sessions", (req,res)=>{
-    res.json(req.session)
-  })
+  
   
   router.get("/blog/:id", (req, res) => {
     Blog.findByPk(req.params.id, {
@@ -33,9 +32,9 @@ router.get("/", (req, res) => {
   });
   
   router.get("/login", (req, res) => {
-    if(req.session.logged_in) {
-      return res.redirect("/profile")
-    }
+    // if(req.session.logged_in) {
+    //   return res.redirect("/profile")
+    // }
       res.render("login")
   })
   
@@ -48,9 +47,9 @@ router.get("/", (req, res) => {
   
   
   router.get("/profile", (req, res) => {
-      if(!req.session.logged_in) {
-        return res.redirect("/login")
-      }
+      // if(!req.session.logged_in) {
+      //   return res.redirect("/login")
+      // }
       User.findByPk(req.session.user_id, {
         include:[Blog, Comment]
       }).then(userData=>{
