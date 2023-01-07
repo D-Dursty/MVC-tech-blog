@@ -4,44 +4,38 @@ const { User, Blog, Comment } = require('../../models');
 
 router.get('/', async(req,res)=>{
     try{
-        const commentData = await Comment.findAll();
-        res.json(commentData);
+        const allCommentData = await Comment.findAll();
+        res.json(allCommentData);
     }catch(err){
         res.json({message:err.message})
     }
 });
 
-router.get('/:id', async(req,res)=>{
-    try{
-        const commentsData = await Comment.findByPk(req.params.id);
-        res.json(commentsData);
-    }catch(err){
-        res.json({message:err.message})
-    }
-})
 
-router.post('/:id', async(req,res)=>{
-    if (!req.session.activeUser){
-        return res.status(401).json({message:"Must be logged in to comment."})
-    }
-    try{
-        const newcommentData = await Comment.create({
-            body:req.body.body,
-            UserId: req.session.activeUser.id,
-            PostId: req.params.id
-        });
-        res.json(newcommentData);
-    }catch(err){
-        res.json({message:err.message})
+router.post('/', (req,res) => {
+    if (req.session) {
+        Comment.create({
+            text: req.body.text,
+            blog_id: req.body.blog_id,
+            user_id: req.body.user_id
+        })
+        .then(commentData => res.json(commentData))
+        .catch(err => {
+            console.log(err)
+            res.status(400).json(err)
+        })
     }
 })
 
 router.delete('/:id', async(req,res)=>{
     try{
-        const delData = await Comment.destroy({where:{id:req.params.id}})
-        res.json(delData)
+        const delComment = await Comment.destroy({
+            where:{
+                id:req.params.id
+            }})
+        res.json(delComment)
     }catch(err){
-        res.json({message:err.message})
+        res.status(500).json(err)
     }
 })
 

@@ -1,10 +1,11 @@
 const loginForm = document.querySelector(".login");
+
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
  
   const userObj = {
-    username: document.querySelector("#loginUsername").value,
-    password: document.querySelector("#loginPassword").value,
+    username: document.querySelector(".loginUsername").value,
+    password: document.querySelector(".loginPassword").value,
   };
   fetch("/api/users/login", {
     method: "POST",
@@ -22,13 +23,12 @@ loginForm.addEventListener("submit", (e) => {
 });
 
 const signupForm = document.querySelector(".signup");
+
 signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log("PREVENTED DEFAULT!");
   const userObj = {
-  
-    username: document.querySelector("#signupUsername").value,
-    password: document.querySelector("#signupPassword").value,
+    username: document.querySelector(".signupUsername").value,
+    password: document.querySelector(".signupPassword").value,
   };
   // console.log(userObj)
   fetch("/api/users/", {

@@ -1,10 +1,10 @@
-<h1>Helloha, {{username}}</h1>
+<h1>Welcome to your blog, {{username}}</h1>
 
 
-<h2>My posts:</h2>
-{{#each Blogs}}
-    <div class = "card">
-        <a href="/blog/{{id}}"><h3>{{title}}</h3></a>
+<h2>Your posts:</h2>
+{{#each blogs as |blog|}}
+    <div class = "blogCard">
+        <a href="api/blogs/{{blog.id}}"><h3>{{blog.title}}</h3></a>
         <p>{{body}}</p>
         {{!-- {{#each Comments}} --}}
     <button class="deletePost" data-blogId="{{id}}">Delete post</button>
