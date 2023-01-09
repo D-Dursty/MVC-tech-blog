@@ -6,10 +6,10 @@ newBlogPost.addEventListener("submit", (e) => {
 
   const blogObj = {
     title: document.querySelector(".blogTitle").value,
-    blog_content: document.querySelector(".blogContent").value,
+    content: document.querySelector(".blogContent").value,
   };
 
-  fetch("/api/blogs", {
+  fetch("/api/posts", {
     method: "POST",
     body: JSON.stringify(blogObj),
     headers: {
@@ -27,9 +27,9 @@ newBlogPost.addEventListener("submit", (e) => {
 
 deletePost.forEach((delBtn) => {
   delBtn.addEventListener("click", (e) => {
-    const blogId = e.target.getAttribute("blogId");
-    console.log(blogId);
-    fetch(`/api/blogs/${blogId}`, {
+    const postId = e.target.getAttribute("postId");
+    console.log(postId);
+    fetch(`/api/blogs/${postId}`, {
       method: "DELETE"
     }).then((res) => {
       if (res.ok) {

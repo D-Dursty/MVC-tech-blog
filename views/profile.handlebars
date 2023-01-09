@@ -2,12 +2,11 @@
 
 
 <h2>Your posts:</h2>
-{{#each blogs as |blog|}}
-    <div class = "blogCard">
-        <a href="api/blogs/{{blog.id}}"><h3>{{blog.title}}</h3></a>
+{{#each posts as |post|}}
+    <div class = "postCard">
+        <a href="api/posts/{{post.id}}"><h3>{{post.title}}</h3></a>
         <p>{{body}}</p>
-        {{!-- {{#each Comments}} --}}
-    <button class="deletePost" data-blogId="{{id}}">Delete post</button>
+    <button class="deletePost" postId="{{id}}">Delete post</button>
         <hr>
     </div>
 {{/each}}
@@ -15,7 +14,7 @@
 <h2>Add a blog post!</h2>
 <form action="" class="addBlog">
     <input type="text" name="title" class="blogTitle" placeholder="Blog Title">
-    <input type="text" name="blog_content" class="blog_content" placeholder="Blog Content">
+    <input type="text" name="blog_content" class="blogContent" placeholder="Blog Content">
     <button type="submit">Add Blog!</button>
 </form>
 

@@ -1,0 +1,18 @@
+<h1>{{title}} by {{user.username}}</h1>
+<h2>{{content}}</h2>
+<h6>Written on {{date_created}}</h6>
+{{!-- <button class="editBtn" postId="{{id}}">Edit</button> --}}
+<hr>  
+{{#each comments}}
+    <p>{{text}}</p>
+    <p>Comment from {{user.username}} on {{created}}</p>
+{{/each}}
+
+<h2>Add Comment</h2>
+<form id="newCommentForm" class="comment-form" data-postId={{id}}>
+    <input type="text" name="commentContent" id="commentText" placeholder="Add A Comment">
+    <button type="submit">Add Your Comment!</button>
+</form>
+
+
+<script src="/js/unoPost.js"></script>
