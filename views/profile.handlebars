@@ -1,7 +1,7 @@
-<h1>Welcome to your blog, {{username}}</h1>
+<h3>Welcome to your blog, {{username}}</h3>
 
 
-<h2>Your posts:</h2>
+<h4>Your Post History:</h4>
 {{#each posts as |post|}}
     <div class = "postCard">
         <a href="api/posts/{{post.id}}"><h3>{{post.title}}</h3></a>
@@ -11,7 +11,7 @@
     </div>
 {{/each}}
 
-<h2>Add a blog post!</h2>
+<h2>Create a New Post!</h2>
 <form action="" class="addBlog">
     <input type="text" name="title" class="blogTitle" placeholder="Blog Title">
     <input type="text" name="blog_content" class="blogContent" placeholder="Blog Content">

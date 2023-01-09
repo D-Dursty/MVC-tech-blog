@@ -1,13 +1,15 @@
-const commentForm = document.querySelector("#addComment");
+const commentForm = document.querySelector("#newCommentForm");
+
 commentForm.addEventListener("submit", e=> {
     e.preventDefault();
     const commentObj = {
-        Text: document.querySelector("#commentContent").value,
+        text: document.querySelector("#commentText").value,
+        post_id: document.querySelector(".comment-form").dataset.Id
         
     }
     fetch("/api/comments",{
         method:"POST",
-        body:JSON.stringify(Post_id, commentObj),
+        body:JSON.stringify(commentObj),
         headers:{
             "Content-Type":"application/json"
         }
@@ -20,20 +22,3 @@ commentForm.addEventListener("submit", e=> {
     })
 })
 
-const editButtons = document.querySelectorAll(".editBtn");
-
-editButtons.forEach(editBtn=>{
-    editBtn.addEventListener("click",e=>{
-        const postId = e.target.getAttribute("blogId")
-        console.log(postId);
-        fetch(`/api/posts/${postId}`,{
-            method:"PUT"
-        }).then(res=>{
-            if(res.ok){
-                location.reload();
-            } else {
-                alert("trumpet sound")
-            }
-        })
-    })
-})

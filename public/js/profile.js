@@ -25,18 +25,3 @@ newBlogPost.addEventListener("submit", (e) => {
   });
 });
 
-deletePost.forEach((delBtn) => {
-  delBtn.addEventListener("click", (e) => {
-    const postId = e.target.getAttribute("postId");
-    console.log(postId);
-    fetch(`/api/blogs/${postId}`, {
-      method: "DELETE"
-    }).then((res) => {
-      if (res.ok) {
-        location.reload();
-      } else {
-        alert("trumpet sound");
-      }
-    });
-  });
-});

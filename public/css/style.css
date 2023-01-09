@@ -4,3 +4,45 @@
     color: rgb(187, 207, 143); 
 
 }
+
+.mainHeader {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+}
+
+.subhead {
+    font-style: italic;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+}
+
+.homeLink, .profileLink, .loginLink, .logoutBtn {
+    display: inline;
+    align-self: center;
+    text-decoration: none;
+    background-color:rgb(187, 207, 143);
+    color: rgb(64, 109, 94);
+    border-radius: 0 0 35px 35px;
+    width:70px;
+    height:40px;
+    border-style: none;
+    margin: 0px;
+    font-size: 15px;
+}
+
+.homeHeader {
+    display: flex;
+    justify-content: flex-start;
+    font-style: italic;
+}
+
+.divider {
+    display: flex;
+    justify-content: center;
+}

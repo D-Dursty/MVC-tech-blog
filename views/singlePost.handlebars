@@ -1,18 +1,20 @@
-<h1>{{title}} by {{user.username}}</h1>
-<h2>{{content}}</h2>
-<h6>Written on {{date_created}}</h6>
+<h4>{{title}} by {{user.username}}</h4>
+<p>{{content}}</p>
+<h5>Written on {{date_created}}</h5>
 {{!-- <button class="editBtn" postId="{{id}}">Edit</button> --}}
 <hr>  
 {{#each comments}}
     <p>{{text}}</p>
-    <p>Comment from {{user.username}} on {{created}}</p>
+    <h5>Comment from {{user.username}} on {{created}}</h5>
 {{/each}}
 
+{{#if logged_in}}
 <h2>Add Comment</h2>
-<form id="newCommentForm" class="comment-form" data-postId={{id}}>
+<form id="newCommentForm" class="comment-form" data-postId="{{id}}">
     <input type="text" name="commentContent" id="commentText" placeholder="Add A Comment">
     <button type="submit">Add Your Comment!</button>
 </form>
+{{/if}}
 
 
-<script src="/js/unoPost.js"></script>
+<script src="/js/comments.js"></script>
